@@ -88,8 +88,8 @@ module.exports = configure(function (/* ctx */) {
       config: {
         dark: true,
         brand: {
-          primary: '#1DB954',
-          secondary: '#191414',
+          primary: '#191414',
+          accent: '#1DB954',
         },
       },
 
