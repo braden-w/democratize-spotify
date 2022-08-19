@@ -35,7 +35,7 @@
     </div>
 
     <q-card class="q-mb-md">
-      <q-card-section class="text-h5">Currently Open</q-card-section>
+      <q-card-section class="text-h5">Queue</q-card-section>
       <q-card-section>
         <SongCardList
           :songs="queue"
@@ -48,7 +48,7 @@
       </q-card-section>
     </q-card>
     <q-card>
-      <q-card-section class="text-h5">Currently Closed</q-card-section>
+      <q-card-section class="text-h5">Playlist</q-card-section>
       <q-card-section>
         <SongCardList
           :songs="playlist"
