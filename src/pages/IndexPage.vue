@@ -68,31 +68,34 @@ import { ref, watch } from 'vue';
 import { useQuasar } from 'quasar';
 import { onBeforeRouteLeave } from 'vue-router';
 
-startSync();
+const queue = ref([]);
+const playlist = ref([]);
 
-async function pullRefresh(done: () => void): Promise<void> {
-  await refresh();
-  done();
-}
+// startSync();
+
+// async function pullRefresh(done: () => void): Promise<void> {
+//   await refresh();
+//   done();
+// }
 
 const banner = ref(true);
 
 // --- App Visibility Toggles Sync ---
-const $q = useQuasar();
-watch(
-  () => $q.appVisible,
-  (val) => {
-    console.log(val ? 'App became visible' : 'App went in the background');
-    if (val) {
-      startSync();
-    } else {
-      stopSync();
-    }
-  }
-);
+// const $q = useQuasar();
+// watch(
+//   () => $q.appVisible,
+//   (val) => {
+//     console.log(val ? 'App became visible' : 'App went in the background');
+//     if (val) {
+//       startSync();
+//     } else {
+//       stopSync();
+//     }
+//   }
+// );
 
 // --- Routing ---
-onBeforeRouteLeave(() => {
-  stopSync();
-});
+// onBeforeRouteLeave(() => {
+//   stopSync();
+// });
 </script>
