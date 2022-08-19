@@ -20,7 +20,7 @@
       class="q-mb-md"
       style="width: 100%"
     >
-      <q-banner inline-actions dense rounded class="bg-accent text-white">
+      <q-banner inline-actions dense rounded class="text-white">
         <template #avatar>
           <q-icon name="shopping_bag" />
         </template>
