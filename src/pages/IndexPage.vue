@@ -25,7 +25,7 @@
           <q-icon name="shopping_bag" />
         </template>
         <div class="text-subtitle2 text-center">
-          Yale Buttery Book is now available on the App Store!
+          <!-- Yale Buttery Book is now available on the App Store! -->
         </div>
         <template #action>
           <q-btn flat label="Install" to="/install" />
