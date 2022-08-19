@@ -64,9 +64,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { useQuasar } from 'quasar';
-import { onBeforeRouteLeave } from 'vue-router';
+import { ref } from 'vue';
+// import { useQuasar } from 'quasar';
+// import { onBeforeRouteLeave } from 'vue-router';
 
 const queue = ref([]);
 const playlist = ref([]);
