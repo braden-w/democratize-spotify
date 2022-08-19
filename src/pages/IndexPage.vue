@@ -1,42 +1,98 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page>
+    <q-card class="q-mb-md">
+      <q-input
+        standout
+        dense
+        debounce="300"
+        @click="$router.push('/menus')"
+        placeholder="Add a song..."
+        style="width: 100%"
+      >
+        <template #append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+    </q-card>
+
+    <div
+      v-if="banner && !$q.platform.is.capacitor"
+      class="q-mb-md"
+      style="width: 100%"
+    >
+      <q-banner inline-actions dense rounded class="bg-accent text-white">
+        <template #avatar>
+          <q-icon name="shopping_bag" />
+        </template>
+        <div class="text-subtitle2 text-center">
+          Yale Buttery Book is now available on the App Store!
+        </div>
+        <template #action>
+          <q-btn flat label="Install" to="/install" />
+          <q-btn flat icon="close" @click="banner = false" />
+        </template>
+      </q-banner>
+    </div>
+
+    <q-card class="q-mb-md">
+      <q-card-section class="text-h5">Currently Open</q-card-section>
+      <q-card-section>
+        <SongCardList
+          :songs="queue"
+          :emptyMessage="{
+            overline: 'Oops!',
+            header: 'No Butteries Open',
+            text: 'Maybe try snackpass :(',
+          }"
+        />
+      </q-card-section>
+    </q-card>
+    <q-card>
+      <q-card-section class="text-h5">Currently Closed</q-card-section>
+      <q-card-section>
+        <SongCardList
+          :songs="playlist"
+          :emptyMessage="{
+            overline: 'Yay!',
+            header: 'No Butteries Closed',
+            text: 'Today is a good day!',
+          }"
+        />
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useQuasar } from 'quasar';
+import { onBeforeRouteLeave } from 'vue-router';
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: 'ct1'
-  },
-  {
-    id: 2,
-    content: 'ct2'
-  },
-  {
-    id: 3,
-    content: 'ct3'
-  },
-  {
-    id: 4,
-    content: 'ct4'
-  },
-  {
-    id: 5,
-    content: 'ct5'
+startSync();
+
+async function pullRefresh(done: () => void): Promise<void> {
+  await refresh();
+  done();
+}
+
+const banner = ref(true);
+
+// --- App Visibility Toggles Sync ---
+const $q = useQuasar();
+watch(
+  () => $q.appVisible,
+  (val) => {
+    console.log(val ? 'App became visible' : 'App went in the background');
+    if (val) {
+      startSync();
+    } else {
+      stopSync();
+    }
   }
-]);
-const meta = ref<Meta>({
-  totalCount: 1200
+);
+
+// --- Routing ---
+onBeforeRouteLeave(() => {
+  stopSync();
 });
 </script>
